@@ -95,11 +95,23 @@ class AutonomousAgent: ObservableObject {
                 return
             }
             
-            if !ollamaManager.models.contains(where: { $0.name == model.name }) {
+            // Match model name with or without version tag (e.g., "mistral" matches "mistral:latest")
+            let modelNameWithoutTag = model.name.components(separatedBy: ":").first ?? model.name
+            let matchingModel = ollamaManager.models.first { availableModel in
+                let availableNameWithoutTag = availableModel.name.components(separatedBy: ":").first ?? availableModel.name
+                return availableNameWithoutTag == modelNameWithoutTag
+            }
+            
+            guard let actualModel = matchingModel else {
                 addLog("Error: Model \(model.name) not found in available models")
                 addLog("Available models: \(ollamaManager.models.map { $0.name }.joined(separator: ", "))")
                 stop()
                 return
+            }
+            
+            // Update currentModel to the actual model with correct name
+            await MainActor.run {
+                currentModel = actualModel
             }
             
             addLog("Generating tasks using model: \(model.name)...")

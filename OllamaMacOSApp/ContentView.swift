@@ -50,6 +50,7 @@ struct ContentView: View {
 struct DashboardView: View {
     @EnvironmentObject var memoryManager: MemoryManager
     @EnvironmentObject var ollamaManager: OllamaManager
+    @State private var showAssistant = false
     
     var body: some View {
         ScrollView {
@@ -149,6 +150,75 @@ struct DashboardView: View {
                 .padding()
                 .background(Color(NSColor.controlBackgroundColor))
                 .cornerRadius(10)
+                
+                // Desktop Assistant Control
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Desktop Assistant")
+                        .font(.headline)
+                    
+                    HStack {
+                        Button(showAssistant ? "Hide Assistant" : "Show Assistant") {
+                            withAnimation {
+                                showAssistant.toggle()
+                            }
+                        }
+                        .buttonStyle(.borderedProminent)
+                        
+                        Circle()
+                            .fill(showAssistant ? Color.green : Color.gray)
+                            .frame(width: 10, height: 10)
+                    }
+                    
+                    Text("Double-click the assistant to expand/collapse chat")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                .padding()
+                .background(Color(NSColor.controlBackgroundColor))
+                .cornerRadius(10)
+                
+                if showAssistant {
+                    VStack(spacing: 12) {
+                        // Simple assistant avatar
+                        ZStack {
+                            Circle()
+                                .fill(Color.blue)
+                                .frame(width: 60, height: 60)
+                            
+                            Text("🤖")
+                                .font(.system(size: 30))
+                        }
+                        
+                        // Chat interface
+                        VStack(spacing: 8) {
+                            ScrollView {
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text("Hi! I'm your AI assistant. Ask me anything!")
+                                        .font(.body)
+                                        .padding()
+                                        .background(Color(NSColor.controlBackgroundColor))
+                                        .cornerRadius(8)
+                                }
+                            }
+                            .frame(height: 150)
+                            
+                            HStack {
+                                TextField("Ask me anything...", text: .constant(""))
+                                    .textFieldStyle(.roundedBorder)
+                                
+                                Button("Send") {
+                                    // Send message
+                                }
+                                .buttonStyle(.borderedProminent)
+                            }
+                        }
+                    }
+                    .frame(height: 300)
+                    .padding()
+                    .background(Color(NSColor.windowBackgroundColor))
+                    .cornerRadius(12)
+                    .shadow(radius: 10)
+                }
             }
             .padding()
         }

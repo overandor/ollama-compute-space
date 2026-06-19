@@ -301,7 +301,12 @@ struct TerminalView: View {
             return "Error: No models available. Please pull a model first using 'pull <model>' command."
         }
         
-        guard let model = ollamaManager.models.first(where: { $0.name == modelName }) else {
+        // Match model name with or without version tag (e.g., "mistral" matches "mistral:latest")
+        let modelNameWithoutTag = modelName.components(separatedBy: ":").first ?? modelName
+        guard let model = ollamaManager.models.first(where: { availableModel in
+            let availableNameWithoutTag = availableModel.name.components(separatedBy: ":").first ?? availableModel.name
+            return availableNameWithoutTag == modelNameWithoutTag
+        }) else {
             return "Error: Model '\(modelName)' not found. Available models: \(ollamaManager.models.map { $0.name }.joined(separator: ", ")). Please pull the model first."
         }
         

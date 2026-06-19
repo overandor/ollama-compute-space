@@ -39,7 +39,9 @@ class OllamaManager: ObservableObject {
             Bundle.main.path(forResource: "ollama", ofType: nil),
             "/opt/homebrew/bin/ollama",
             "/usr/local/bin/ollama",
-            "/usr/bin/ollama"
+            "/usr/bin/ollama",
+            "/opt/homebrew/bin/ollama",  // Apple Silicon Homebrew
+            "/usr/local/bin/ollama"      // Intel Homebrew
         ]
         
         var ollamaPath: String?
@@ -51,9 +53,31 @@ class OllamaManager: ObservableObject {
             }
         }
         
+        // If not found in static paths, try using 'which' command
+        if ollamaPath == nil {
+            let whichTask = Process()
+            whichTask.executableURL = URL(fileURLWithPath: "/bin/zsh")
+            whichTask.arguments = ["-c", "which ollama"]
+            
+            let pipe = Pipe()
+            whichTask.standardOutput = pipe
+            whichTask.standardError = pipe
+            
+            try? whichTask.run()
+            whichTask.waitUntilExit()
+            
+            let data = pipe.fileHandleForReading.readDataToEndOfFile()
+            if let path = String(data: data, encoding: .utf8)?.trimmingCharacters(in: .whitespacesAndNewlines), !path.isEmpty {
+                if FileManager.default.fileExists(atPath: path) {
+                    ollamaPath = path
+                    addLog("Found Ollama via 'which': \(path)")
+                }
+            }
+        }
+        
         guard let path = ollamaPath else {
             addLog("Error: Ollama binary not found. Tried paths: \(possiblePaths.compactMap { $0 }.joined(separator: ", "))")
-            addLog("Please install Ollama from https://ollama.com or specify the path manually")
+            addLog("Please install Ollama from https://ollama.com: curl -fsSL https://ollama.com/install.sh | sh")
             throw OllamaError.serverNotRunning
         }
         
@@ -66,7 +90,7 @@ class OllamaManager: ObservableObject {
         ollamaProcess?.standardError = pipe
         
         ollamaProcess?.terminationHandler = { [weak self] _ in
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 self?.isRunning = false
                 self?.addLog("Ollama server stopped")
             }
