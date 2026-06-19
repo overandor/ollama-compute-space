@@ -57,68 +57,86 @@ class ContextCompressor {
         )
     }
     
-    // L1: Convert old turns into claims, constraints, decisions, artifacts
+    // L1: Convert old turns into cognition capsule (objective, constraints, verified facts, unknowns, next action, forbidden claims, receipt references)
     private func compressToL1(rawContext: String) -> CompressionResult {
         var packet = MemoryPacket(from: rawContext, sourceType: .chat, path: "current_session")
         
-        // Extract structured information
-        let claims = extractClaims(from: rawContext)
+        // Extract structured information for capsule
+        let objective = extractObjective(from: rawContext)
         let constraints = extractConstraints(from: rawContext)
-        let decisions = extractDecisions(from: rawContext)
-        let artifacts = extractArtifacts(from: rawContext)
+        let verifiedFacts = extractVerifiedFacts(from: rawContext)
+        let unknowns = extractUnknowns(from: rawContext)
+        let nextAction = extractNextAction(from: rawContext)
+        let forbiddenClaims = extractForbiddenClaims(from: rawContext)
+        let receiptReferences = extractReceiptReferences(from: rawContext)
         
-        // Build structured summary
-        var summary = "## Structured Summary\n\n"
+        // Build cognition capsule
+        var capsule = "## Cognition Capsule\n\n"
         
-        if !claims.isEmpty {
-            summary += "### Claims\n"
-            for claim in claims {
-                summary += "- \(claim)\n"
-                packet.claimLedger.addClaim(
-                    Claim(statement: claim, evidence: [], confidence: 0.8, timestamp: ISO8601DateFormatter().string(from: Date())),
-                    category: .inferred
-                )
-            }
-            summary += "\n"
-        }
+        capsule += "### Objective\n\(objective)\n\n"
+        packet.taskState.activeGoal = objective
         
         if !constraints.isEmpty {
-            summary += "### Constraints\n"
+            capsule += "### Active Constraints\n"
             for constraint in constraints {
-                summary += "- \(constraint)\n"
+                capsule += "- \(constraint)\n"
                 packet.taskState.constraints.append(constraint)
             }
-            summary += "\n"
+            capsule += "\n"
         }
         
-        if !decisions.isEmpty {
-            summary += "### Decisions\n"
-            for decision in decisions {
-                summary += "- \(decision)\n"
-                packet.taskState.decisions.append(
-                    Decision(description: decision, rationale: "Extracted from context", timestamp: ISO8601DateFormatter().string(from: Date()))
+        if !verifiedFacts.isEmpty {
+            capsule += "### Verified Facts\n"
+            for fact in verifiedFacts {
+                capsule += "- \(fact)\n"
+                packet.claimLedger.addClaim(
+                    Claim(statement: fact, evidence: [], confidence: 0.95, timestamp: ISO8601DateFormatter().string(from: Date())),
+                    category: .verified
                 )
             }
-            summary += "\n"
+            capsule += "\n"
         }
         
-        if !artifacts.isEmpty {
-            summary += "### Artifacts\n"
-            for artifact in artifacts {
-                summary += "- \(artifact)\n"
+        if !unknowns.isEmpty {
+            capsule += "### Open Unknowns\n"
+            for unknown in unknowns {
+                capsule += "- \(unknown)\n"
+                packet.taskState.openQuestions.append(unknown)
             }
-            summary += "\n"
+            capsule += "\n"
+        }
+        
+        capsule += "### Next Action\n\(nextAction)\n\n"
+        
+        if !forbiddenClaims.isEmpty {
+            capsule += "### Forbidden Claims\n"
+            for claim in forbiddenClaims {
+                capsule += "- \(claim)\n"
+                packet.claimLedger.addClaim(
+                    Claim(statement: claim, evidence: [], confidence: 0.0, timestamp: ISO8601DateFormatter().string(from: Date())),
+                    category: .blocked
+                )
+            }
+            capsule += "\n"
+        }
+        
+        if !receiptReferences.isEmpty {
+            capsule += "### Receipt References\n"
+            for receipt in receiptReferences {
+                capsule += "- \(receipt)\n"
+            }
+            capsule += "\n"
         }
         
         memoryPackets.append(packet)
         
         return CompressionResult(
-            compressedContent: summary,
+            compressedContent: capsule,
             originalTokens: rawContext.estimatedTokenCount(),
-            compressedTokens: summary.estimatedTokenCount(),
+            compressedTokens: capsule.estimatedTokenCount(),
             level: .L1_structured_summary,
-            preservedElements: ["claims", "constraints", "decisions", "artifacts"],
-            droppedElements: ["conversational_prose", "redundant_explanations"]
+            preservedElements: ["objective", "constraints", "verified_facts", "unknowns", "next_action", "forbidden_claims", "receipt_references"],
+            droppedElements: ["repetition", "emotional_filler", "duplicate_explanations", "stale_branches"]
         )
     }
     
@@ -315,7 +333,6 @@ class ContextCompressor {
     }
     
     private func extractCodeSymbols(from text: String) -> [String] {
-        // Extract code-like patterns
         let patterns = ["func ", "class ", "var ", "let ", "def ", "import "]
         let lines = text.components(separatedBy: "\n")
         var symbols: [String] = []
@@ -329,6 +346,94 @@ class ContextCompressor {
         }
         
         return symbols
+    }
+    
+    private func extractObjective(from text: String) -> String {
+        let patterns = ["goal:", "objective:", "target:", "aim:", "task:"]
+        for pattern in patterns {
+            if let range = text.range(of: pattern, options: .caseInsensitive) {
+                let afterPattern = text[range.upperBound...]
+                let lines = afterPattern.components(separatedBy: "\n")
+                if let firstLine = lines.first {
+                    return firstLine.trimmingCharacters(in: .whitespaces)
+                }
+            }
+        }
+        return "Extract objective from context"
+    }
+    
+    private func extractVerifiedFacts(from text: String) -> [String] {
+        let patterns = ["fact:", "verified:", "proven:", "confirmed:", "result:"]
+        var facts: [String] = []
+        let lines = text.components(separatedBy: "\n")
+        for line in lines {
+            for pattern in patterns {
+                if line.lowercased().contains(pattern) {
+                    facts.append(line.trimmingCharacters(in: .whitespaces))
+                    break
+                }
+            }
+        }
+        return facts
+    }
+    
+    private func extractUnknowns(from text: String) -> [String] {
+        let patterns = ["unknown:", "unclear:", "question:", "todo:", "investigate:"]
+        var unknowns: [String] = []
+        let lines = text.components(separatedBy: "\n")
+        for line in lines {
+            for pattern in patterns {
+                if line.lowercased().contains(pattern) {
+                    unknowns.append(line.trimmingCharacters(in: .whitespaces))
+                    break
+                }
+            }
+        }
+        return unknowns
+    }
+    
+    private func extractNextAction(from text: String) -> String {
+        let patterns = ["next:", "action:", "step:", "do:", "execute:"]
+        for pattern in patterns {
+            if let range = text.range(of: pattern, options: .caseInsensitive) {
+                let afterPattern = text[range.upperBound...]
+                let lines = afterPattern.components(separatedBy: "\n")
+                if let firstLine = lines.first {
+                    return firstLine.trimmingCharacters(in: .whitespaces)
+                }
+            }
+        }
+        return "Determine next action"
+    }
+    
+    private func extractForbiddenClaims(from text: String) -> [String] {
+        let patterns = ["forbidden:", "blocked:", "avoid:", "not:", "never:"]
+        var claims: [String] = []
+        let lines = text.components(separatedBy: "\n")
+        for line in lines {
+            for pattern in patterns {
+                if line.lowercased().contains(pattern) {
+                    claims.append(line.trimmingCharacters(in: .whitespaces))
+                    break
+                }
+            }
+        }
+        return claims
+    }
+    
+    private func extractReceiptReferences(from text: String) -> [String] {
+        let patterns = ["receipt:", "hash:", "reference:", "ref:", "cite:"]
+        var receipts: [String] = []
+        let lines = text.components(separatedBy: "\n")
+        for line in lines {
+            for pattern in patterns {
+                if line.lowercased().contains(pattern) {
+                    receipts.append(line.trimmingCharacters(in: .whitespaces))
+                    break
+                }
+            }
+        }
+        return receipts
     }
     
     private func extractTopics(from text: String) -> [Topic] {

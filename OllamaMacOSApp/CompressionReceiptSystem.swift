@@ -1,4 +1,12 @@
 import Foundation
+import CryptoKit
+
+extension Data {
+    func sha256() -> String {
+        let hashed = SHA256.hash(data: self)
+        return hashed.compactMap { String(format: "%02x", $0) }.joined()
+    }
+}
 
 class CompressionReceiptSystem {
     private var receipts: [CognitionCompressionReceipt] = []
@@ -26,7 +34,9 @@ class CompressionReceiptSystem {
         preserved: [String],
         dropped: [String]
     ) -> CognitionCompressionReceipt {
-        let receipt = CognitionCompressionReceipt(
+        let previousHash = receipts.last?.currentReceiptHash
+        
+        let receiptData = CognitionCompressionReceipt(
             timestamp: Date(),
             model: model,
             task: task,
@@ -47,13 +57,51 @@ class CompressionReceiptSystem {
                 evidenceLoss: verification.evidenceLoss,
                 claimLabelingPresent: verification.claimLabelingPresent,
                 hallucinationRisk: verification.hallucinationRisk
-            )
+            ),
+            previousReceiptHash: previousHash,
+            currentReceiptHash: "" // Will be computed
+        )
+        
+        // Compute hash of receipt content + previous hash for chain
+        let currentHash = computeReceiptHash(receipt: receiptData, previousHash: previousHash)
+        
+        let receipt = CognitionCompressionReceipt(
+            timestamp: receiptData.timestamp,
+            model: receiptData.model,
+            task: receiptData.task,
+            rawContextTokens: receiptData.rawContextTokens,
+            hydratedContextTokens: receiptData.hydratedContextTokens,
+            compressionRatio: receiptData.compressionRatio,
+            preserved: receiptData.preserved,
+            dropped: receiptData.dropped,
+            ramBefore: receiptData.ramBefore,
+            ramAfter: receiptData.ramAfter,
+            qualityGate: receiptData.qualityGate,
+            previousReceiptHash: previousHash,
+            currentReceiptHash: currentHash
         )
         
         receipts.append(receipt)
         saveReceipts()
         
         return receipt
+    }
+    
+    private func computeReceiptHash(receipt: CognitionCompressionReceipt, previousHash: String?) -> String {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .sortedKeys
+        
+        guard let data = try? encoder.encode(receipt) else {
+            return UUID().uuidString
+        }
+        
+        let hash = data.sha256()
+        
+        if let previous = previousHash {
+            return (hash + previous).sha256()
+        } else {
+            return hash
+        }
     }
     
     func getReceipt(id: UUID) -> CognitionCompressionReceipt? {
@@ -135,6 +183,10 @@ class CompressionReceiptSystem {
             evidence_loss: \(receipt.qualityGate.evidenceLoss)
             claim_labeling_present: \(receipt.qualityGate.claimLabelingPresent)
             hallucination_risk: \(hallucinationRiskToString(receipt.qualityGate.hallucinationRisk))
+          hash_chain:
+            previous_receipt_hash: \(receipt.previousReceiptHash ?? "none")
+            current_receipt_hash: \(receipt.currentReceiptHash)
+          claim_status: inferred
         """
         
         return yaml
@@ -181,6 +233,8 @@ struct CognitionCompressionReceipt: Identifiable, Codable {
     let ramBefore: ReceiptRAMMetrics
     let ramAfter: ReceiptRAMMetrics
     let qualityGate: QualityGate
+    let previousReceiptHash: String?
+    let currentReceiptHash: String
 }
 
 struct ReceiptRAMMetrics: Codable {

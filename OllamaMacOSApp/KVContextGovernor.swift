@@ -140,6 +140,46 @@ class KVContextGovernor: ObservableObject {
         }
     }
     
+    func getDynamicContextLength(taskType: TaskType) -> Int {
+        switch taskType {
+        case .smallTask:
+            // 4k-8k for small tasks
+            return min(8192, maxContextLength)
+        case .codingTask:
+            // 16k-64k for coding tasks
+            return min(65536, maxContextLength)
+        case .repoAgentTask:
+            // 64k when needed for repo agent tasks
+            return min(65536, maxContextLength)
+        case .chatTask:
+            // 4k-16k for chat
+            return min(16384, maxContextLength)
+        case .summarizationTask:
+            // 8k-32k for summarization
+            return min(32768, maxContextLength)
+        }
+    }
+    
+    func shouldUseLargeContext(taskType: TaskType, estimatedTokens: Int) -> Bool {
+        // Rule: never use 64k context for a 2k task
+        if estimatedTokens < 2048 {
+            return false
+        }
+        
+        switch taskType {
+        case .smallTask:
+            return false
+        case .codingTask:
+            return estimatedTokens > 8000
+        case .repoAgentTask:
+            return estimatedTokens > 16000
+        case .chatTask:
+            return estimatedTokens > 4000
+        case .summarizationTask:
+            return estimatedTokens > 8000
+        }
+    }
+    
     func setParallelismBasedOnMemory(availableMemoryGB: Double) {
         switch availableMemoryGB {
         case 0..<8:
@@ -185,6 +225,14 @@ enum TaskComplexity {
     case moderate
     case complex
     case veryComplex
+}
+
+enum TaskType {
+    case smallTask
+    case codingTask
+    case repoAgentTask
+    case chatTask
+    case summarizationTask
 }
 
 struct ContextBudgetReceipt {

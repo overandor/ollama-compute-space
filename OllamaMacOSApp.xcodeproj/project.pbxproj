@@ -18,6 +18,22 @@
 		A1B2C3D4E5F6G7HO /* VMManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7HP /* VMManger.swift */; };
 		A1B2C3D4E5F6G7HQ /* AIAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7HR /* AIAgent.swift */; };
 		A1B2C3D4E5F6G7HS /* AIAgentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7HT /* AIAgentView.swift */; };
+		A1B2C3D4E5F6G7J1 /* RAMObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7J2 /* RAMObserver.swift */; };
+		A1B2C3D4E5F6G7J3 /* MemoryPacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7J4 /* MemoryPacket.swift */; };
+		A1B2C3D4E5F6G7J5 /* ContextCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7J6 /* ContextCompressor.swift */; };
+		A1B2C3D4E5F6G7J7 /* KVContextGovernor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7J8 /* KVContextGovernor.swift */; };
+		A1B2C3D4E5F6G7J9 /* QualityVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7JA /* QualityVerifier.swift */; };
+		A1B2C3D4E5F6G7JB /* OperatingModes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7JC /* OperatingModes.swift */; };
+		A1B2C3D4E5F6G7JD /* OllamaMemoryLevers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7JE /* OllamaMemoryLevers.swift */; };
+		A1B2C3D4E5F6G7JF /* CognitionCompressionAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7JG /* CognitionCompressionAlgorithm.swift */; };
+		A1B2C3D4E5F6G7JH /* CompressionReceiptSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7JI /* CompressionReceiptSystem.swift */; };
+		A1B2C3D4E5F6G7JJ /* ModelResidencyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7JK /* ModelResidencyController.swift */; };
+		A1B2C3D4E5F6G7JL /* RepoCognitionCompressor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7JM /* RepoCognitionCompressor.swift */; };
+		A1B2C3D4E5F6G7JN /* MLXPCAWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7JO /* MLXPCAWorker.swift */; };
+		A1B2C3D4E5F6G7JP /* OllamaObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7JQ /* OllamaObserver.swift */; };
+		A1B2C3D4E5F6G7JR /* OllamaCogRamLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7JS /* OllamaCogRamLoop.swift */; };
+		A1B2C3D4E5F6G7JT /* MemoryPolicyRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7JU /* MemoryPolicyRules.swift */; };
+		A1B2C3D4E5F6G7JV /* BenchmarkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7JW /* BenchmarkProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +49,22 @@
 		A1B2C3D4E5F6G7HP /* VMManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VMManger.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6G7HR /* AIAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIAgent.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6G7HT /* AIAgentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIAgentView.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7J2 /* RAMObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RAMObserver.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7J4 /* MemoryPacket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryPacket.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7J6 /* ContextCompressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextCompressor.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7J8 /* KVContextGovernor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVContextGovernor.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7JA /* QualityVerifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QualityVerifier.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7JC /* OperatingModes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperatingModes.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7JE /* OllamaMemoryLevers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamaMemoryLevers.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7JG /* CognitionCompressionAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CognitionCompressionAlgorithm.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7JI /* CompressionReceiptSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressionReceiptSystem.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7JK /* ModelResidencyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelResidencyController.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7JM /* RepoCognitionCompressor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepoCognitionCompressor.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7JO /* MLXPCAWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLXPCAWorker.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7JQ /* OllamaObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamaObserver.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7JS /* OllamaCogRamLoop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamaCogRamLoop.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7JU /* MemoryPolicyRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryPolicyRules.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7JW /* BenchmarkProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchmarkProtocol.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6G7HU /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1B2C3D4E5F6G7HV /* OllamaMacOSApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OllamaMacOSApp.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,6 +102,22 @@
 				A1B2C3D4E5F6G7HP /* VMManger.swift */,
 				A1B2C3D4E5F6G7HR /* AIAgent.swift */,
 				A1B2C3D4E5F6G7HT /* AIAgentView.swift */,
+				A1B2C3D4E5F6G7J2 /* RAMObserver.swift */,
+				A1B2C3D4E5F6G7J4 /* MemoryPacket.swift */,
+				A1B2C3D4E5F6G7J6 /* ContextCompressor.swift */,
+				A1B2C3D4E5F6G7J8 /* KVContextGovernor.swift */,
+				A1B2C3D4E5F6G7JA /* QualityVerifier.swift */,
+				A1B2C3D4E5F6G7JC /* OperatingModes.swift */,
+				A1B2C3D4E5F6G7JE /* OllamaMemoryLevers.swift */,
+				A1B2C3D4E5F6G7JG /* CognitionCompressionAlgorithm.swift */,
+				A1B2C3D4E5F6G7JI /* CompressionReceiptSystem.swift */,
+				A1B2C3D4E5F6G7JK /* ModelResidencyController.swift */,
+				A1B2C3D4E5F6G7JM /* RepoCognitionCompressor.swift */,
+				A1B2C3D4E5F6G7JO /* MLXPCAWorker.swift */,
+				A1B2C3D4E5F6G7JQ /* OllamaObserver.swift */,
+				A1B2C3D4E5F6G7JS /* OllamaCogRamLoop.swift */,
+				A1B2C3D4E5F6G7JU /* MemoryPolicyRules.swift */,
+				A1B2C3D4E5F6G7JW /* BenchmarkProtocol.swift */,
 				A1B2C3D4E5F6G7HU /* Info.plist */,
 				A1B2C3D4E5F6G7HV /* OllamaMacOSApp.entitlements */,
 			);
@@ -163,6 +211,22 @@
 				A1B2C3D4E5F6G7HO /* VMManger.swift in Sources */,
 				A1B2C3D4E5F6G7HQ /* AIAgent.swift in Sources */,
 				A1B2C3D4E5F6G7HS /* AIAgentView.swift in Sources */,
+				A1B2C3D4E5F6G7J1 /* RAMObserver.swift in Sources */,
+				A1B2C3D4E5F6G7J3 /* MemoryPacket.swift in Sources */,
+				A1B2C3D4E5F6G7J5 /* ContextCompressor.swift in Sources */,
+				A1B2C3D4E5F6G7J7 /* KVContextGovernor.swift in Sources */,
+				A1B2C3D4E5F6G7J9 /* QualityVerifier.swift in Sources */,
+				A1B2C3D4E5F6G7JB /* OperatingModes.swift in Sources */,
+				A1B2C3D4E5F6G7JD /* OllamaMemoryLevers.swift in Sources */,
+				A1B2C3D4E5F6G7JF /* CognitionCompressionAlgorithm.swift in Sources */,
+				A1B2C3D4E5F6G7JH /* CompressionReceiptSystem.swift in Sources */,
+				A1B2C3D4E5F6G7JJ /* ModelResidencyController.swift in Sources */,
+				A1B2C3D4E5F6G7JL /* RepoCognitionCompressor.swift in Sources */,
+				A1B2C3D4E5F6G7JN /* MLXPCAWorker.swift in Sources */,
+				A1B2C3D4E5F6G7JP /* OllamaObserver.swift in Sources */,
+				A1B2C3D4E5F6G7JR /* OllamaCogRamLoop.swift in Sources */,
+				A1B2C3D4E5F6G7JT /* MemoryPolicyRules.swift in Sources */,
+				A1B2C3D4E5F6G7JV /* BenchmarkProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
