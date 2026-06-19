@@ -36,6 +36,18 @@ class KVContextGovernor: ObservableObject {
         case emergencyShrink
     }
     
+    enum TaskType {
+        case simple
+        case complex
+        case codeGeneration
+        case analysis
+        case smallTask
+        case codingTask
+        case repoAgentTask
+        case chatTask
+        case summarizationTask
+    }
+    
     private let contextLengthTiers: [Int] = [4096, 8192, 16384, 32768, 65536, 131072, 262144]
     
     init() {
@@ -157,6 +169,14 @@ class KVContextGovernor: ObservableObject {
         case .summarizationTask:
             // 8k-32k for summarization
             return min(32768, maxContextLength)
+        case .simple:
+            return min(8192, maxContextLength)
+        case .complex:
+            return min(32768, maxContextLength)
+        case .codeGeneration:
+            return min(65536, maxContextLength)
+        case .analysis:
+            return min(16384, maxContextLength)
         }
     }
     
@@ -177,6 +197,14 @@ class KVContextGovernor: ObservableObject {
             return estimatedTokens > 4000
         case .summarizationTask:
             return estimatedTokens > 8000
+        case .simple:
+            return estimatedTokens > 4000
+        case .complex:
+            return estimatedTokens > 8000
+        case .codeGeneration:
+            return estimatedTokens > 8000
+        case .analysis:
+            return estimatedTokens > 6000
         }
     }
     

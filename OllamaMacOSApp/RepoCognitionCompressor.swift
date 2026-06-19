@@ -167,8 +167,8 @@ class RepoCognitionCompressor {
                 let file = RepoFile(
                     path: element.path,
                     role: determineFileRole(path: element.path),
-                    size: resourceValues?.fileSize ?? 0,
-                    lastModified: resourceValues?.contentModificationDate ?? Date(),
+                    size: resourceValues.fileSize ?? 0,
+                    lastModified: resourceValues.contentModificationDate ?? Date(),
                     language: determineLanguage(path: element.path),
                     hash: computeHash(path: element.path)
                 )

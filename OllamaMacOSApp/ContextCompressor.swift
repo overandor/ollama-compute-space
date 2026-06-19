@@ -1,4 +1,5 @@
 import Foundation
+import CryptoKit
 
 class ContextCompressor {
     private var memoryPackets: [MemoryPacket] = []
@@ -11,6 +12,20 @@ class ContextCompressor {
         case L3_PCA_topic_state       // Compress recurring topics into low-dimensional vectors
         case L4_receipt_ledger        // Keep hashes, citations, file paths, commands
         case L5_cold_archive          // Store full raw text outside active prompt
+    }
+    
+    struct CompressionResult {
+        let compressedContent: String
+        let originalTokens: Int
+        let compressedTokens: Int
+        let level: CompressionLevel
+        let preservedElements: [String]
+        let droppedElements: [String]
+        
+        var compressionRatio: Double {
+            guard originalTokens > 0 else { return 1.0 }
+            return Double(originalTokens) / Double(compressedTokens)
+        }
     }
     
     func compressContext(
@@ -259,7 +274,7 @@ class ContextCompressor {
         // Store full content in archive (simulated)
         let archivePath = archiveContent(rawContext, packetId: packet.packetId)
         
-        let compressed = "## Cold Archive Reference\n\n"
+        var compressed = "## Cold Archive Reference\n\n"
         compressed += "Full content archived at: \(archivePath)\n"
         compressed += "Packet ID: \(packet.packetId)\n"
         compressed += "Use retrieval to access specific sections\n"
@@ -551,20 +566,6 @@ class ContextCompressor {
             .sorted { $0.1 > $1.1 }
             .prefix(maxPackets)
             .map { $0.0 }
-    }
-}
-
-struct CompressionResult {
-    let compressedContent: String
-    let originalTokens: Int
-    let compressedTokens: Int
-    let level: ContextCompressor.CompressionLevel
-    let preservedElements: [String]
-    let droppedElements: [String]
-    
-    var compressionRatio: Double {
-        guard compressedTokens > 0 else { return 1.0 }
-        return Double(originalTokens) / Double(compressedTokens)
     }
 }
 

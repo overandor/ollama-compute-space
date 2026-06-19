@@ -212,9 +212,9 @@ class BenchmarkProtocol {
     
     private func measureRAM() -> (usedGB: Double, swapUsedGB: Double, compressedGB: Double) {
         return (
-            usedGB: ramObserver.systemUsedGB,
+            usedGB: ramObserver.ollamaRSSGB,
             swapUsedGB: ramObserver.systemSwapUsedGB,
-            compressedGB: ramObserver.systemCompressedGB
+            compressedGB: ramObserver.compressedMemoryGB
         )
     }
     

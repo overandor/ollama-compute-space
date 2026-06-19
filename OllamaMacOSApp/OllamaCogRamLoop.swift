@@ -9,7 +9,7 @@ class OllamaCogRamLoop: ObservableObject {
     private let qualityVerifier: QualityVerifier
     private let receiptSystem: CompressionReceiptSystem
     private let mlxPCAWorker: MLXPCAWorker
-    private let operatingModes: OperatingModes
+    private let operatingModes: OperatingModeManager
     
     @Published var currentLoopState: LoopState = .idle
     @Published var lastLoopResult: LoopResult?
@@ -57,6 +57,8 @@ class OllamaCogRamLoop: ObservableObject {
         case checkpointCognitionState
         case restartWorker
         case reloadOnlyCapsule
+        case allowLargerContext
+        case preserveRicherWorkingMemory
     }
     
     init(
@@ -68,7 +70,7 @@ class OllamaCogRamLoop: ObservableObject {
         qualityVerifier: QualityVerifier,
         receiptSystem: CompressionReceiptSystem,
         mlxPCAWorker: MLXPCAWorker,
-        operatingModes: OperatingModes
+        operatingModes: OperatingModeManager
     ) {
         self.ramObserver = ramObserver
         self.ollamaObserver = ollamaObserver
@@ -160,8 +162,15 @@ class OllamaCogRamLoop: ObservableObject {
     // Step 1: Measure RAM QUAD
     private func measureRAMQuad() -> CompressionReceipt {
         return CompressionReceipt(
+            timestamp: Date(),
             ollamaRSSGB: ramObserver.ollamaRSSGB,
-            swapUsedGB: ramObserver.systemSwapUsedGB
+            swapUsedGB: ramObserver.systemSwapUsedGB,
+            compressedMemoryGB: 0.0,
+            memoryPressure: ramObserver.memoryPressure,
+            pageoutsPerSec: 0.0,
+            promptTokens: 0,
+            contextTokens: 0,
+            responseLatencyMs: 0.0
         )
     }
     
@@ -289,8 +298,9 @@ class OllamaCogRamLoop: ObservableObject {
         compressionResult: ContextCompressor.CompressionResult
     ) async -> CognitionCompressionReceipt {
         let verification = qualityVerifier.verifyCompression(
-            original: "",
-            compressed: compressionResult.compressedContent
+            originalContent: "",
+            compressedContent: compressionResult.compressedContent,
+            compressionResult: compressionResult
         )
         
         return receiptSystem.generateReceipt(
@@ -338,9 +348,7 @@ class OllamaCogRamLoop: ObservableObject {
         switch memoryState {
         case .green:
             return [
-                .keepModelLoaded,
-                .allowLargerContext,
-                .preserveRicherWorkingMemory
+                .keepModelLoaded
             ]
             
         case .yellow:

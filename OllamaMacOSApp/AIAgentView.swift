@@ -3,18 +3,10 @@ import SwiftUI
 struct AIAgentView: View {
     @EnvironmentObject var ollamaManager: OllamaManager
     @EnvironmentObject var memoryManager: MemoryManager
-    @StateObject private var vmManager = VMManager()
-    @StateObject private var aiAgent: AIAgent
+    @EnvironmentObject var vmManager: VMManager
+    @EnvironmentObject var aiAgent: AIAgent
     @State private var taskInput = ""
     @State private var selectedModel: OllamaModel?
-    
-    init() {
-        _aiAgent = StateObject(wrappedValue: AIAgent(
-            ollamaManager: OllamaManager(),
-            vmManager: VMManager(),
-            memoryManager: MemoryManager()
-        ))
-    }
     
     var body: some View {
         HSplitView {

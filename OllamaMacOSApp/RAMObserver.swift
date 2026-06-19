@@ -114,18 +114,17 @@ class RAMObserver: ObservableObject {
     
     private func updateMemoryPressure() {
         // Use memory pressure notifications
+        // memorystatus_get_level is not available in public SDK, use alternative approach
         var status: UInt32 = 0
-        let result = memorystatus_get_level(&status)
+        // let result = memorystatus_get_level(&status)
         
-        if result == 0 {
-            switch status {
-            case 0...1:
-                memoryPressure = .normal
-            case 2:
-                memoryPressure = .yellow
-            default:
-                memoryPressure = .red
-            }
+        // Alternative: use swap usage as proxy for memory pressure
+        if systemSwapUsedGB > 1.0 {
+            memoryPressure = .red
+        } else if systemSwapUsedGB > 0.1 {
+            memoryPressure = .yellow
+        } else {
+            memoryPressure = .normal
         }
     }
     

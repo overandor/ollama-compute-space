@@ -95,3 +95,8 @@ iOSInjectionProject/
 # Build artifacts
 build/
 *.dmg
+
+# Environment variables and secrets
+.env
+.env.local
+.secrets

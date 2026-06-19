@@ -1,4 +1,5 @@
 import Foundation
+import CryptoKit
 
 class CognitionCompressionAlgorithm {
     private let contextCompressor: ContextCompressor
@@ -57,7 +58,7 @@ class CognitionCompressionAlgorithm {
             verification: qualityVerifier.verifyCompression(
                 originalContent: rawContext,
                 compressedContent: hydratedContext,
-                compressionResult: CompressionResult(
+                compressionResult: ContextCompressor.CompressionResult(
                     compressedContent: hydratedContext,
                     originalTokens: rawContext.estimatedTokenCount(),
                     compressedTokens: hydratedContext.estimatedTokenCount(),

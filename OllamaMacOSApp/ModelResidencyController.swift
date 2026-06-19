@@ -35,6 +35,13 @@ class ModelResidencyController: ObservableObject {
         case serializeTaskStateThenUnload
     }
     
+    struct ResidencyReceipt {
+        let timestamp: Date
+        let loadedModels: [String]
+        let totalMemoryGB: Double
+        let queueDepth: Int
+    }
+    
     private let ramObserver: RAMObserver
     private let ollamaManager: OllamaManager
     
@@ -90,9 +97,9 @@ class ModelResidencyController: ObservableObject {
         // Default: keep loaded if recently used
         if timeSinceLastUse < 300 {
             return .keepLoaded
-        } else {
-            return .setKeepAliveShort
         }
+        
+        return .unloadNow
     }
     
     func executeResidencyAction(_ action: ResidencyAction, modelName: String) async throws {
@@ -185,18 +192,7 @@ class ModelResidencyController: ObservableObject {
             timestamp: Date(),
             loadedModels: loadedModels.map { $0.name },
             totalMemoryGB: getTotalLoadedModelMemoryGB(),
-            taskQueueCount: taskQueue.count,
-            memoryPressure: ramObserver.memoryPressure,
-            swapUsedGB: ramObserver.systemSwapUsedGB
+            queueDepth: taskQueue.count
         )
     }
-}
-
-struct ResidencyReceipt {
-    let timestamp: Date
-    let loadedModels: [String]
-    let totalMemoryGB: Double
-    let taskQueueCount: Int
-    let memoryPressure: RAMObserver.MemoryPressure
-    let swapUsedGB: Double
 }

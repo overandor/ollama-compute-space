@@ -26,7 +26,7 @@ class MLXPCAWorker {
     struct PCAComponent {
         let name: String
         let weights: [Double]
-        let currentValue: Double
+        var currentValue: Double
         let interpretation: String
     }
     

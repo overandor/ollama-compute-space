@@ -98,7 +98,7 @@ class CompressionReceiptSystem {
         let hash = data.sha256()
         
         if let previous = previousHash {
-            return (hash + previous).sha256()
+            return (hash + previous).data(using: .utf8)?.sha256() ?? hash
         } else {
             return hash
         }

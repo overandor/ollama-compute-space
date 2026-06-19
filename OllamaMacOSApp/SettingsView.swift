@@ -7,6 +7,9 @@ struct SettingsView: View {
     @State private var maxMemoryGB: Double = 8.0
     @State private var autoStartServer: Bool = true
     @State private var enableMemoryWarnings: Bool = true
+    @State private var hfAPIKey: String = ""
+    @State private var testResult: String = ""
+    @State private var isTesting: Bool = false
     
     var body: some View {
         ScrollView {
@@ -66,6 +69,51 @@ struct SettingsView: View {
                     Text(Bundle.main.resourcePath ?? "~/Library/Application Support/OllamaMacOSApp/models")
                         .font(.system(.caption, design: .monospaced))
                         .foregroundColor(.secondary)
+                }
+                .padding()
+                .background(Color(NSColor.controlBackgroundColor))
+                .cornerRadius(10)
+                
+                // Hugging Face API Settings
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Hugging Face API")
+                        .font(.headline)
+                    
+                    VStack(alignment: .leading) {
+                        Text("API Key:")
+                            .font(.caption)
+                        SecureField("Enter your Hugging Face API key", text: $hfAPIKey)
+                            .textFieldStyle(.roundedBorder)
+                    }
+                    
+                    HStack {
+                        Button("Test API Key") {
+                            Task {
+                                isTesting = true
+                                testResult = ""
+                                do {
+                                    let result = try await ollamaManager.testHuggingFaceAPI(apiKey: hfAPIKey)
+                                    testResult = "✓ Success: \(result)"
+                                } catch {
+                                    testResult = "✗ Failed: \(error.localizedDescription)"
+                                }
+                                isTesting = false
+                            }
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .disabled(hfAPIKey.isEmpty || isTesting)
+                        
+                        if isTesting {
+                            ProgressView()
+                                .scaleEffect(0.7)
+                        }
+                    }
+                    
+                    if !testResult.isEmpty {
+                        Text(testResult)
+                            .font(.caption)
+                            .foregroundColor(testResult.hasPrefix("✓") ? .green : .red)
+                    }
                 }
                 .padding()
                 .background(Color(NSColor.controlBackgroundColor))

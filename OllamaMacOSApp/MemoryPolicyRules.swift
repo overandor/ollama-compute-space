@@ -4,13 +4,13 @@ class MemoryPolicyRules {
     private let ramObserver: RAMObserver
     private let kvContextGovernor: KVContextGovernor
     private let modelResidencyController: ModelResidencyController
-    private let operatingModes: OperatingModes
+    private let operatingModes: OperatingModeManager
     
     init(
         ramObserver: RAMObserver,
         kvContextGovernor: KVContextGovernor,
         modelResidencyController: ModelResidencyController,
-        operatingModes: OperatingModes
+        operatingModes: OperatingModeManager
     ) {
         self.ramObserver = ramObserver
         self.kvContextGovernor = kvContextGovernor

@@ -3,6 +3,7 @@ import SwiftUI
 struct AgentsView: View {
     @EnvironmentObject var memoryManager: MemoryManager
     @EnvironmentObject var ollamaManager: OllamaManager
+    @EnvironmentObject var autonomousAgent: AutonomousAgent
     @State private var showingCreateAgent = false
     @State private var showingCreateChat = false
     @State private var selectedAgent: AgentMemory?
@@ -10,6 +11,8 @@ struct AgentsView: View {
     @State private var newAgentMemory = 2.0
     @State private var newChatName = ""
     @State private var newChatMemory = 1.0
+    @State private var autonomousObjective = ""
+    @State private var selectedAutonomousModel: OllamaModel?
     
     var body: some View {
         HSplitView {
@@ -133,6 +136,72 @@ struct AgentsView: View {
                                 }
                             }
                         }
+                    }
+                    .padding()
+                    .background(Color(NSColor.controlBackgroundColor))
+                    .cornerRadius(10)
+                    
+                    // Autonomous Agent Control
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Autonomous Agent")
+                            .font(.headline)
+                        
+                        HStack {
+                            if autonomousAgent.isRunning {
+                                Button("Stop Agent") {
+                                    autonomousAgent.stop()
+                                }
+                                .buttonStyle(.bordered)
+                            } else {
+                                Button("Start Agent") {
+                                    if let model = selectedAutonomousModel {
+                                        autonomousAgent.start(model: model, objective: autonomousObjective)
+                                    }
+                                }
+                                .buttonStyle(.borderedProminent)
+                                .disabled(autonomousObjective.isEmpty || selectedAutonomousModel == nil)
+                            }
+                            
+                            Circle()
+                                .fill(autonomousAgent.isRunning ? Color.green : Color.red)
+                                .frame(width: 10, height: 10)
+                        }
+                        
+                        VStack(alignment: .leading) {
+                            Text("Objective:")
+                                .font(.caption)
+                            TextField("Enter objective for autonomous agent...", text: $autonomousObjective)
+                                .textFieldStyle(.roundedBorder)
+                        }
+                        
+                        VStack(alignment: .leading) {
+                            Text("Model:")
+                                .font(.caption)
+                            Picker("Model", selection: $selectedAutonomousModel) {
+                                ForEach(ollamaManager.models) { model in
+                                    Text(model.name).tag(model as OllamaModel?)
+                                }
+                            }
+                        }
+                        
+                        Divider()
+                        
+                        Text("Agent Logs")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        
+                        ScrollView {
+                            VStack(alignment: .leading, spacing: 4) {
+                                ForEach(autonomousAgent.logs, id: \.self) { log in
+                                    Text(log)
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        }
+                        .frame(height: 150)
+                        .background(Color(NSColor.textBackgroundColor))
+                        .cornerRadius(8)
                     }
                     .padding()
                     .background(Color(NSColor.controlBackgroundColor))

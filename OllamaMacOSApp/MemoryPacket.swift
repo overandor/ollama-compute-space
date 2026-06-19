@@ -5,10 +5,10 @@ struct MemoryPacket: Identifiable, Codable {
     let id: UUID
     let packetId: String // SHA256 hash
     let source: PacketSource
-    let claimLedger: ClaimLedger
-    let taskState: TaskState
-    let retrievalKeys: RetrievalKeys
-    let compression: CompressionMetrics
+    var claimLedger: ClaimLedger
+    var taskState: TaskState
+    var retrievalKeys: RetrievalKeys
+    var compression: CompressionMetrics
     
     init(from content: String, sourceType: SourceType, path: String) {
         self.id = UUID()

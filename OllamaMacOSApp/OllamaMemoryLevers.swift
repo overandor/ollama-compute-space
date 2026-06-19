@@ -73,6 +73,8 @@ class OllamaMemoryLevers {
             kvGovernor.currentContextLength = min(kvGovernor.currentContextLength * 2, kvGovernor.maxContextLength)
         case .userRequest(let length):
             kvGovernor.currentContextLength = min(length, kvGovernor.maxContextLength)
+        case .userRequestKV:
+            break // KV cache type change doesn't affect context length
         }
     }
     
@@ -84,7 +86,9 @@ class OllamaMemoryLevers {
             kvGovernor.kvCacheType = .q8_0
         case .memoryAvailable:
             kvGovernor.kvCacheType = .f16
-        case .userRequest(let type):
+        case .userRequest:
+            break // Context length change doesn't affect KV cache type
+        case .userRequestKV(let type):
             kvGovernor.kvCacheType = type
         }
     }
@@ -99,6 +103,8 @@ class OllamaMemoryLevers {
             kvGovernor.parallelism = min(kvGovernor.parallelism + 1, 4)
         case .userRequest(let count):
             kvGovernor.parallelism = count
+        case .userRequestKV:
+            break // KV cache type change doesn't affect parallelism
         }
     }
     

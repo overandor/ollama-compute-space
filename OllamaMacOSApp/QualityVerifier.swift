@@ -5,7 +5,7 @@ class QualityVerifier {
     func verifyCompression(
         originalContent: String,
         compressedContent: String,
-        compressionResult: CompressionResult
+        compressionResult: ContextCompressor.CompressionResult
     ) -> VerificationResult {
         var preservedElements: [String] = []
         var lostElements: [String] = []
@@ -248,7 +248,7 @@ class QualityVerifier {
         return (preservationScore * 0.7) + (compressionScore * 0.3)
     }
     
-    private func assessHallucinationRisk(compressionResult: CompressionResult) -> HallucinationRisk {
+    private func assessHallucinationRisk(compressionResult: ContextCompressor.CompressionResult) -> HallucinationRisk {
         // Higher compression levels increase hallucination risk
         switch compressionResult.level {
         case .L0_raw_recent_context:
@@ -374,7 +374,7 @@ struct PreservationCheck {
     let compressedCount: Int
 }
 
-enum HallucinationRisk {
+enum HallucinationRisk: Codable {
     case low
     case medium
     case high
