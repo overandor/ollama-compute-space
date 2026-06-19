@@ -37,11 +37,17 @@ struct ContentView: View {
                 }
                 .tag(4)
             
+            NextGenAgentView()
+                .tabItem {
+                    Label("NextGen", systemImage: "sparkles")
+                }
+                .tag(5)
+            
             SettingsView()
                 .tabItem {
                     Label("Settings", systemImage: "gearshape.fill")
                 }
-                .tag(5)
+                .tag(6)
         }
         .frame(minWidth: 1200, minHeight: 800)
     }

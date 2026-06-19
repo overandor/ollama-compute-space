@@ -36,6 +36,8 @@
 		A1B2C3D4E5F6G7JV /* BenchmarkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7JW /* BenchmarkProtocol.swift */; };
 		A1B2C3D4E5F6G7JX /* AutonomousAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7JY /* AutonomousAgent.swift */; };
 		A1B2C3D4E5F6G7JZ /* DesktopAssistantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7K0 /* DesktopAssistantView.swift */; };
+		A1B2C3D4E5F6G7K1 /* NextGenAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7K2 /* NextGenAgent.swift */; };
+		A1B2C3D4E5F6G7K3 /* NextGenAgentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7K4 /* NextGenAgentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +71,8 @@
 		A1B2C3D4E5F6G7JW /* BenchmarkProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BenchmarkProtocol.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6G7JY /* AutonomousAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutonomousAgent.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6G7K0 /* DesktopAssistantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopAssistantView.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7K2 /* NextGenAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextGenAgent.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7K4 /* NextGenAgentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextGenAgentView.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6G7HU /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1B2C3D4E5F6G7HV /* OllamaMacOSApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OllamaMacOSApp.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -124,6 +128,8 @@
 				A1B2C3D4E5F6G7JW /* BenchmarkProtocol.swift */,
 				A1B2C3D4E5F6G7JY /* AutonomousAgent.swift */,
 				A1B2C3D4E5F6G7K0 /* DesktopAssistantView.swift */,
+				A1B2C3D4E5F6G7K2 /* NextGenAgent.swift */,
+				A1B2C3D4E5F6G7K4 /* NextGenAgentView.swift */,
 				A1B2C3D4E5F6G7HU /* Info.plist */,
 				A1B2C3D4E5F6G7HV /* OllamaMacOSApp.entitlements */,
 			);
@@ -235,6 +241,8 @@
 				A1B2C3D4E5F6G7JV /* BenchmarkProtocol.swift in Sources */,
 				A1B2C3D4E5F6G7JX /* AutonomousAgent.swift in Sources */,
 				A1B2C3D4E5F6G7JZ /* DesktopAssistantView.swift in Sources */,
+				A1B2C3D4E5F6G7K1 /* NextGenAgent.swift in Sources */,
+				A1B2C3D4E5F6G7K3 /* NextGenAgentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
