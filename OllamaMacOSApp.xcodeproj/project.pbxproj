@@ -38,6 +38,12 @@
 		A1B2C3D4E5F6G7JZ /* DesktopAssistantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7K0 /* DesktopAssistantView.swift */; };
 		A1B2C3D4E5F6G7K1 /* NextGenAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7K2 /* NextGenAgent.swift */; };
 		A1B2C3D4E5F6G7K3 /* NextGenAgentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7K4 /* NextGenAgentView.swift */; };
+		A1B2C3D4E5F6G7K5 /* DigitalTwin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7K6 /* DigitalTwin.swift */; };
+		A1B2C3D4E5F6G7K7 /* DigitalTwinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7K8 /* DigitalTwinView.swift */; };
+		A1B2C3D4E5F6G7K9 /* BehavioralLearningEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7KA /* BehavioralLearningEngine.swift */; };
+		A1B2C3D4E5F6G7KB /* DecisionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7KC /* DecisionEngine.swift */; };
+		A1B2C3D4E5F6G7KD /* PrivacyVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7KE /* PrivacyVault.swift */; };
+		A1B2C3D4E5F6G7KF /* PatternAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6G7KG /* PatternAnalyzer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +79,12 @@
 		A1B2C3D4E5F6G7K0 /* DesktopAssistantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesktopAssistantView.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6G7K2 /* NextGenAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextGenAgent.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6G7K4 /* NextGenAgentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextGenAgentView.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7K6 /* DigitalTwin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalTwin.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7K8 /* DigitalTwinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalTwinView.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7KA /* BehavioralLearningEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehavioralLearningEngine.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7KC /* DecisionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecisionEngine.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7KE /* PrivacyVault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyVault.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F6G7KG /* PatternAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternAnalyzer.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6G7HU /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1B2C3D4E5F6G7HV /* OllamaMacOSApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OllamaMacOSApp.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,6 +142,12 @@
 				A1B2C3D4E5F6G7K0 /* DesktopAssistantView.swift */,
 				A1B2C3D4E5F6G7K2 /* NextGenAgent.swift */,
 				A1B2C3D4E5F6G7K4 /* NextGenAgentView.swift */,
+				A1B2C3D4E5F6G7K6 /* DigitalTwin.swift */,
+				A1B2C3D4E5F6G7K8 /* DigitalTwinView.swift */,
+				A1B2C3D4E5F6G7KA /* BehavioralLearningEngine.swift */,
+				A1B2C3D4E5F6G7KC /* DecisionEngine.swift */,
+				A1B2C3D4E5F6G7KE /* PrivacyVault.swift */,
+				A1B2C3D4E5F6G7KG /* PatternAnalyzer.swift */,
 				A1B2C3D4E5F6G7HU /* Info.plist */,
 				A1B2C3D4E5F6G7HV /* OllamaMacOSApp.entitlements */,
 			);
