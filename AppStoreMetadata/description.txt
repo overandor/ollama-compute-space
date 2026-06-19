@@ -1,0 +1,12 @@
+Ollama Compute Space provides a powerful local AI environment with intelligent memory management. Run multiple AI agents and chat sessions with dedicated RAM allocation, similar to Colab but entirely on your Mac.
+
+Key Features:
+• Integrated Ollama server with bundled AI models
+• Terminal and browser interfaces for flexible interaction
+• Per-agent and per-chat memory allocation
+• Real-time memory monitoring and management
+• Support for multiple AI models including Llama, Mistral, and CodeLlama
+• Secure, local processing - no data leaves your machine
+• Optimized for macOS with native performance
+
+Perfect for developers, researchers, and AI enthusiasts who need local AI compute with resource management.

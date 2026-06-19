@@ -1,0 +1,70 @@
+{
+  "app_name": "Ollama Compute Space",
+  "bundle_id": "com.ollamacomputespace.app",
+  "version": "1.0.0",
+  "category": "developer-tools",
+  "subcategory": "ai-tools",
+  
+  "description": {
+    "short": "Local AI compute environment with managed memory allocation for Ollama models.",
+    "full": "Ollama Compute Space provides a powerful local AI environment with intelligent memory management. Run multiple AI agents and chat sessions with dedicated RAM allocation, similar to Colab but entirely on your Mac.\n\nFeatures:\n• Integrated Ollama server with bundled models\n• Terminal and browser interfaces for flexible interaction\n• Per-agent and per-chat memory allocation\n• Real-time memory monitoring and management\n• Support for multiple AI models including Llama, Mistral, and CodeLlama\n• Secure, local processing - no data leaves your machine\n• Optimized for macOS with native performance"
+  },
+  
+  "keywords": [
+    "AI",
+    "Ollama",
+    "LLM",
+    "Machine Learning",
+    "Local AI",
+    "Memory Management",
+    "Developer Tools",
+    "Terminal",
+    "Chat",
+    "Agents"
+  ],
+  
+  "support_url": "https://github.com/yourusername/ollama-macos-app",
+  "privacy_url": "https://github.com/yourusername/ollama-macos-app/blob/main/PRIVACY.md",
+  
+  "privacy": {
+    "data_collection": false,
+    "analytics": false,
+    "third_party_sharing": false,
+    "local_processing_only": true
+  },
+  
+  "requirements": {
+    "minimum_os": "13.0",
+    "recommended_memory": "8GB",
+    "required_memory": "4GB",
+    "architecture": "arm64, x86_64"
+  },
+  
+  "screenshots": [
+    {
+      "position": 1,
+      "description": "Dashboard showing memory allocation and Ollama server status"
+    },
+    {
+      "position": 2,
+      "description": "Terminal interface for command-line AI interaction"
+    },
+    {
+      "position": 3,
+      "description": "Browser interface for web-based Ollama access"
+    },
+    {
+      "position": 4,
+      "description": "Agent management with per-agent memory allocation"
+    }
+  ],
+  
+  "app_store_info": {
+    "age_rating": "4+",
+    "content_rights": "No objectionable content",
+    "pricing": {
+      "type": "paid",
+      "price_tier": 2
+    }
+  }
+}
